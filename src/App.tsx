@@ -1,4 +1,5 @@
 import './App.css'
+import api from './api/api'
 //useffect
 import { useState, useEffect } from 'react'
 type ProdutoType = {
@@ -10,15 +11,9 @@ type ProdutoType = {
 }
 function App() {
   const [produtos, setProdutos] = useState<ProdutoType[]>([])
-  const token = localStorage.getItem("token")
   useEffect(() => {
-    fetch('/api/produtos',{
-      headers:{
-        'Authorization': `Bearer ${token}`
-      }
-    })
-      .then((response) => response.json())
-      .then((data) => setProdutos(data))
+    api.get("/produtos")
+      .then((response) => setProdutos(response.data))
       .catch((error) => console.error('Error fetching data:', error))
   }, [])
   function handleForm(event: React.FormEvent<HTMLFormElement>) {

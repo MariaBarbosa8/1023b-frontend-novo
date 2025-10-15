@@ -26,9 +26,11 @@ function Login(){
                 localStorage.setItem("token",resposta?.data?.token)
                 navigate("/")
             }
-            else if(resposta.status ===400){
-                navigate(`/login?messagem=${resposta?.data?.messagem}`)
-            }
+        }).catch((error:any)=>{
+            const msg = error?.response?.data?.mensagem || 
+                        error?.mensagem || 
+                        "Erro Desconhecido!"
+            navigate(`/login?message=${encodeURIComponent(msg)}`)
         })
     }
 
