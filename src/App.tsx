@@ -10,8 +10,13 @@ type ProdutoType = {
 }
 function App() {
   const [produtos, setProdutos] = useState<ProdutoType[]>([])
+  const token = localStorage.getItem("token")
   useEffect(() => {
-    fetch('/api/produtos')
+    fetch('/api/produtos',{
+      headers:{
+        'Authorization': `Bearer ${token}`
+      }
+    })
       .then((response) => response.json())
       .then((data) => setProdutos(data))
       .catch((error) => console.error('Error fetching data:', error))
